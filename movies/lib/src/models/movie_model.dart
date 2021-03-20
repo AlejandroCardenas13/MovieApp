@@ -68,4 +68,10 @@ class Movie {
         ? 'https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-1-580x440.png'
         : 'https://image.tmdb.org/t/p/original/$posterPath';
   }
+
+  getBackgroundImage() {
+    return posterPath == null
+        ? 'https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-1-580x440.png'
+        : 'https://image.tmdb.org/t/p/original/$backdropPath';
+  }
 }
