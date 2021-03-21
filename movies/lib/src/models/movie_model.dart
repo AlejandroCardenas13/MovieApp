@@ -1,5 +1,5 @@
 class Movies {
-  List<Movie> items = List();
+  List<Movie> items = [];
 
   Movies();
 
