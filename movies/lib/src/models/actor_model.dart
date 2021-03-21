@@ -1,15 +1,14 @@
 class Actors {
-  List<Actor> actors = [];
+  List<Actor> items = [];
 
   Actors();
 
   Actors.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
-
-    for (var item in jsonList) {
+    jsonList.forEach((item) {
       final actor = Actor.fromJsonMap(item);
       actors.add(actor);
-    }
+    });
   }
 }
 
@@ -54,5 +53,11 @@ class Actor {
     character = json['character'];
     creditId = json['credit_id'];
     order = json['order'];
+  }
+
+  getPosterActorImg() {
+    return profilePath == null
+        ? 'https://i.pinimg.com/originals/fc/0c/77/fc0c7762eae4affd716151ef68be93b6.png'
+        : 'https://image.tmdb.org/t/p/original/$profilePath';
   }
 }

@@ -1,26 +1,23 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:movies/src/models/movie_model.dart';
-
+import 'common_provider.dart';
 import 'package:http/http.dart' as http;
 
 /**
  * StreamController<List<Movie>>(); solamente un Widget podría escuchar este Stream se le agrega el .broadcast() para que cualquier
- * Widget pueda escuchar el Stream 
+ * Widget pueda escuchar el Stream
  */
 
 class MoviesProvider {
-  String _apiKey = '';
-  String _url = 'api.themoviedb.org';
-  String _language = 'en-US';
-
+  final UtilProvider _utilProvider = UtilProvider();
   int _popularesPage = 0;
   bool _loading = false;
 
   List<Movie> _popularMovies = [];
 
   final _popularMoviesStreamController =
-      StreamController<List<Movie>>.broadcast(); //
+  StreamController<List<Movie>>.broadcast(); //
 
   Function(List<Movie>) get getPopularMoviesSink =>
       _popularMoviesStreamController.sink.add;
@@ -38,8 +35,8 @@ class MoviesProvider {
   }
 
   Future<List<Movie>> getOnMovies() async {
-    final url = Uri.https(_url, '/3/movie/now_playing',
-        {'api_key': _apiKey, 'language': _language});
+    final url = Uri.https(_utilProvider.url, '/3/movie/now_playing',
+    {'api_key': _utilProvider.apiKey, 'language': _utilProvider.language});
     return await _processResponse(url);
   }
 
@@ -51,9 +48,9 @@ class MoviesProvider {
 
     _popularesPage++;
 
-    final url = Uri.https(_url, '/3/movie/popular', {
-      'api_key': _apiKey,
-      'language': _language,
+    final url = Uri.https(_utilProvider.url, '/3/movie/popular', {
+      'api_key': _utilProvider.apiKey,
+      'language': _utilProvider.language,
       'page': _popularesPage.toString()
     });
     final resp = await _processResponse(url);
