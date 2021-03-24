@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:movies/src/delegates/search_delegate.dart';
 import 'package:movies/src/providers/movies_provider.dart';
 import 'package:movies/src/widgets/card_swiper_widget.dart';
 import 'package:movies/src/widgets/horizontal_movie.dart';
@@ -9,7 +10,7 @@ import 'package:movies/src/widgets/horizontal_movie.dart';
  * if (snapshot.connectionState == ConnectionState.done)Una forma de comprobar si ya respondio el future
  * snapshot.data?.forEach((p) => print(p.title)); El signo de interrogación es para especificarle que ejecute el forEach si EXTISTE data
  * El StreamBuilder se va a ejecutar cada vez que se emita un valor en el stream
- * Cuando una función la declaramos moviesProvider.getPopularMovies es porque unicamente la estamos definidiendo 
+ * Cuando una función la declaramos moviesProvider.getPopularMovies es porque unicamente la estamos definidiendo
  * mientras que si la pasamos moviesProvider.getPopularMovies() es para que se ejecute de una vez
  */
 
@@ -31,7 +32,12 @@ class HomePage extends StatelessWidget {
             margin: EdgeInsets.only(top: 15.0),
             child: IconButton(
               icon: Icon(Icons.search),
-              onPressed: () => null,
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: DataSearch(), /*query: "Hi!"*/
+                );
+              },
             ),
           )
         ],
@@ -52,7 +58,6 @@ class HomePage extends StatelessWidget {
     return FutureBuilder(
         future: moviesProvider.getOnMovies(),
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          
           if (snapshot.hasData)
             return CardSwiper(
               movies: snapshot.data,
@@ -83,10 +88,8 @@ class HomePage extends StatelessWidget {
             height: 9.0,
           ),
           StreamBuilder(
-            
             stream: moviesProvider.getPopularMoviesStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-      
               if (snapshot.hasData)
                 return HorizontalMovie(
                   movies: snapshot.data,
