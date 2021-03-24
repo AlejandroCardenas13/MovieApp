@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movies/src/models/movie_model.dart';
+import 'package:movies/src/providers/movies_provider.dart';
 
 class DataSearch extends SearchDelegate {
   String selection = '';
+  final MoviesProvider _moviesProvider = new MoviesProvider();
 
   final movies = [
     'Spiderman',
@@ -46,7 +49,7 @@ class DataSearch extends SearchDelegate {
     ));
   }
 
-  @override
+/*  @override
   Widget buildSuggestions(BuildContext context) {
     // Son las sugerencias que aparecen cuando la persona escribe
 
@@ -70,5 +73,38 @@ class DataSearch extends SearchDelegate {
       },
       itemCount: suggestedList.length,
     );
+  }*/
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Son las sugerencias que aparecen cuando la persona escribe
+    final detail = FutureBuilder(
+        future: _moviesProvider.searchMovie(query),
+        builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
+          final movies = snapshot.data;
+          return (snapshot.hasData)
+              ? ListView(
+                  children: movies.map((movie) {
+                    return ListTile(
+                      leading: FadeInImage(
+                        image: NetworkImage(movie.getPosterImg()),
+                        placeholder: AssetImage('assets/no-image.jpg'),
+                        width: 50.0,
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(movie.title),
+                      subtitle: Text(movie.originalTitle),
+                      onTap: () {
+                        close(context, null);
+                        movie.uniqueId = '${movie.id}-search';
+                        Navigator.pushNamed(context, 'detail',
+                            arguments: movie);
+                      },
+                    );
+                  }).toList(),
+                )
+              : Center(child: CircularProgressIndicator(strokeWidth: 2.1));
+        });
+    return (query.isEmpty) ? Container() : detail;
   }
 }

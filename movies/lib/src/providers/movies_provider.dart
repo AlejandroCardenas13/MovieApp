@@ -17,7 +17,7 @@ class MoviesProvider {
   List<Movie> _popularMovies = [];
 
   final _popularMoviesStreamController =
-  StreamController<List<Movie>>.broadcast(); //
+      StreamController<List<Movie>>.broadcast(); //
 
   Function(List<Movie>) get getPopularMoviesSink =>
       _popularMoviesStreamController.sink.add;
@@ -36,18 +36,15 @@ class MoviesProvider {
 
   Future<List<Movie>> getOnMovies() async {
     final url = Uri.https(_utilProvider.url, '/3/movie/now_playing',
-    {'api_key': _utilProvider.apiKey, 'language': _utilProvider.language});
+        {'api_key': _utilProvider.apiKey, 'language': _utilProvider.language});
     return await _processResponse(url);
   }
 
   //Refactor usando Stream
   Future<List<Movie>> getPopularMovies() async {
     if (_loading) return [];
-
     _loading = true;
-
     _popularesPage++;
-
     final url = Uri.https(_utilProvider.url, '/3/movie/popular', {
       'api_key': _utilProvider.apiKey,
       'language': _utilProvider.language,
@@ -58,5 +55,14 @@ class MoviesProvider {
     getPopularMoviesSink(_popularMovies);
     _loading = false;
     return resp;
+  }
+
+  Future<List<Movie>> searchMovie(String query) async {
+    final url = Uri.https(_utilProvider.url, '/3/search/movie', {
+      'api_key': _utilProvider.apiKey,
+      'language': _utilProvider.language,
+      'query': query
+    });
+    return await _processResponse(url);
   }
 }

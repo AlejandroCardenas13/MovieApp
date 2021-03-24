@@ -65,10 +65,10 @@ class DetailMovie extends StatelessWidget {
         children: [
           SizedBox(height: 20),
           Hero(
-            tag: movie.id,
+            tag: movie.uniqueId,
             child: ClipRRect(
-              child:
-                  Image(image: NetworkImage(movie.getPosterImg()), height: 150.0),
+              child: Image(
+                  image: NetworkImage(movie.getPosterImg()), height: 150.0),
               borderRadius: BorderRadius.circular(20),
             ),
           ),
