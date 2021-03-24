@@ -8,7 +8,7 @@ class HorizontalMovie extends StatelessWidget {
   HorizontalMovie({@required this.movies, @required this.nextPage});
 
   final PageController _pageController =
-      PageController(initialPage: 1, viewportFraction: 0.3);
+      PageController(initialPage: 0, viewportFraction: 0.3);
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,16 @@ class HorizontalMovie extends StatelessWidget {
         controller: _pageController,
         //children: _cards(context)
         itemCount: movies.length,
-        itemBuilder: (context, index) => _createCard(context, movies[index]),
+        itemBuilder: (context, index) =>
+            _createCard(context, movies[index], _screenSize),
       ),
     );
   }
 
-  Widget _createCard(BuildContext context, Movie movie) {
+  Widget _createCard(BuildContext context, Movie movie, Size size) {
     movie.uniqueId = '${movie.id}-card';
     final card = Container(
+      padding: EdgeInsets.only(top: size.height * 0.022),
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: [

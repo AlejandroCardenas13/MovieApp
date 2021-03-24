@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
               child: Text('Popular',
                   style: Theme.of(context).textTheme.subtitle1)),
           SizedBox(
-            height: 9.0,
+            height: 20.0,
           ),
           StreamBuilder(
             stream: moviesProvider.getPopularMoviesStream,

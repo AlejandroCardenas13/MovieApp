@@ -40,7 +40,7 @@ class DetailMovie extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 44),
           alignment: Alignment.bottomCenter,
           child: Text(
             movie.title,
@@ -97,7 +97,7 @@ class DetailMovie extends StatelessWidget {
     );
   }
 
-  Widget _descriptionMovie(Movie movie) {
+  Widget _descriptionMovie(Movie movie) {//GG
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
       child: Text(movie.overview, textAlign: TextAlign.justify),
@@ -122,6 +122,7 @@ class DetailMovie extends StatelessWidget {
         });
   }
 
+  //Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the RenderFlex to fit within the available space instead of being sized to their natural size.// Solve this
   Widget _createActorsPageView(List<Actor> actors) {
     return SizedBox(
       height: 200.0,

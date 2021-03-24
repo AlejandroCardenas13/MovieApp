@@ -12,7 +12,7 @@ class CardSwiper extends StatelessWidget {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
-        padding: EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.only(top: 1.0),
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
             movies[index].uniqueId = '${movies[index].id}-swiper';
@@ -39,8 +39,8 @@ class CardSwiper extends StatelessWidget {
           //pagination: SwiperPagination(),
           //control: SwiperControl(),
           layout: SwiperLayout.STACK,
-          itemWidth: _screenSize.width * 0.60,
-          itemHeight: _screenSize.height * 0.40,
+          itemWidth: _screenSize.width * 0.70,
+          itemHeight: _screenSize.height * 0.50,
         ));
   }
 }
