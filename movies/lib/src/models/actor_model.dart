@@ -7,7 +7,7 @@ class Actors {
     if (jsonList == null) return;
     jsonList.forEach((item) {
       final actor = Actor.fromJsonMap(item);
-      actors.add(actor);
+      items.add(actor);
     });
   }
 }

@@ -4,6 +4,7 @@ import 'package:movies/src/models/movie_model.dart';
 
 class CardSwiper extends StatelessWidget {
   final List<Movie> movies;
+
   CardSwiper({@required this.movies});
 
   @override
@@ -13,14 +14,27 @@ class CardSwiper extends StatelessWidget {
     return Container(
         padding: EdgeInsets.only(top: 10.0),
         child: Swiper(
-          itemBuilder: (BuildContext context, int index) => ClipRRect(
-            child: FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage(movies[index].getPosterImg()),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.circular(20.0),
-          ),
+          itemBuilder: (BuildContext context, int index) {
+            movies[index].uniqueId = '${movies[index].id}-swiper';
+
+            return Hero(
+              tag: movies[index].uniqueId,
+              child: ClipRRect(
+                child: GestureDetector(
+                  child: FadeInImage(
+                    placeholder: AssetImage('assets/no-image.jpg'),
+                    image: NetworkImage(movies[index].getPosterImg()),
+                    fit: BoxFit.cover,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, 'detail',
+                        arguments: movies[index]);
+                  },
+                ),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            );
+          },
           itemCount: movies.length,
           //pagination: SwiperPagination(),
           //control: SwiperControl(),

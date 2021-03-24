@@ -7,8 +7,6 @@ import 'package:movies/src/models/actor_model.dart';
 class ActorProvider {
   final UtilProvider _utilProvider = UtilProvider();
 
-  List<Actor> _actorList = [];
-
   Future<List<Actor>> _processResponse(Uri url) async {
     final response = await http.get(url);
     final decodedData = json.decode(response.body);
@@ -16,8 +14,8 @@ class ActorProvider {
     return actors.items;
   }
 
-  Future<List<Actor>> getActors(String movieId) async {
-    final url = Uri.https(_utilProvider.url, '/movie/$movieId/credits',
+  Future<List<Actor>> getActors(int movieId) async {
+    final url = Uri.https(_utilProvider.url, '3/movie/$movieId/credits',
         {'api_key': _utilProvider.apiKey, 'language': _utilProvider.language});
     return await _processResponse(url);
   }

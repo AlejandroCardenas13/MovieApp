@@ -38,17 +38,21 @@ class HorizontalMovie extends StatelessWidget {
   }
 
   Widget _createCard(BuildContext context, Movie movie) {
+    movie.uniqueId = '${movie.id}-card';
     final card = Container(
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage(movie.getPosterImg()),
-              fit: BoxFit.cover,
-              height: 170,
+          Hero(
+            tag: movie.uniqueId,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/no-image.jpg'),
+                image: NetworkImage(movie.getPosterImg()),
+                fit: BoxFit.cover,
+                height: 170,
+              ),
             ),
           ),
           SizedBox(
